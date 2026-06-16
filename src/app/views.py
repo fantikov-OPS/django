@@ -22,11 +22,14 @@ def index(request):
         form = UserForm(request.POST)
         if form.is_valid():
             comment = form.cleaned_data['comment']
+            name = form.cleaned_data['name']
             length, vowels, consonants = analyze_comment(comment)
+            formated_lines = [f"{line} (c) {name}" for line in comment.splitlines()]
             stats = {
                 'length': length,
                 'vowels': vowels,
                 'consonants': consonants,
+                'formated_lines': formated_lines,
             }
     else:
         form = UserForm()

@@ -18,5 +18,12 @@
         <p>Гласных: {{ stats.vowels }}</p>
         <p>Согласных: {{ stats.consonants }}</p>
     {% endif %}
+
+    {% if stats.formated_lines %}
+        {% for line in stats.formated_lines %}
+            <p>{{ line }}</p>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>
