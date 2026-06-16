@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Длина имени</title>
+</head>
+<body>
+    <h1>Длина имени</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+
+    {% if name_length is not None %}
+        <p>Имя «{{ submitted_name }}» — {{ name_length }} символов.</p>
+    {% endif %}
+</body>
+</html>
