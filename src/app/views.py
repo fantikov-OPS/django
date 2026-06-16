@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from app.forms import UserForm
+from app.forms import UserForm, NameForm
 
 VOWELS = set('аеёиоуыэюяaeiouy')
 
@@ -38,3 +38,13 @@ def index(request):
         'form': form,
         'stats': stats,
     })
+
+
+def name_form(request):
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+        if form.is_valid():
+            return render(request, 'app/name_display.html', {'name':form.cleaned_data['name']})
+    else:
+        form = NameForm()
+    return render(request, 'app/name_from.html', {'form': form})
