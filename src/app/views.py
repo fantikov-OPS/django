@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from django.template import loader
+from django.http import HttpResponse
 from app.forms import UserForm, NameForm
 
 VOWELS = set('аеёиоуыэюяaeiouy')
@@ -48,3 +49,18 @@ def name_form(request):
     else:
         form = NameForm()
     return render(request, 'app/name_from.html', {'form': form})
+
+
+def greet(request):
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+        if form.is_valid():
+            template = loader.get_template('app/greet.html')
+            html = template.render({'name': form.cleaned_data['name']}, request)
+            return HttpResponse(html)
+    else:
+        form = NameForm()
+    
+    template = loader.get_template('app/greet_form.html')
+    html = template.render({'form': form}, request)
+    return HttpResponse(html)
