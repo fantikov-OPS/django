@@ -12,8 +12,7 @@ class UserForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию'}),
     )
-    age = forms.IntegerField(
-        label='Возраст',
-        min_value=0,
-        widget=forms.NumberInput(attrs={'placeholder': 'Введите возраст'}),
+    comment = forms.CharField(
+        label='Комментарий',
+        widget=forms.Textarea(attrs={'placeholder': 'Введите комментарий', 'rows': 4}),
     )

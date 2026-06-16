@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>Комментарий</title>
 </head>
 <body>
-    <h1>Регистрация</h1>
+    <h1>Форма</h1>
 
     <form method="post">
         {% csrf_token %}
@@ -13,8 +13,10 @@
         <button type="submit">Отправить</button>
     </form>
 
-    {% if message %}
-        <p>{{ message }}</p>
+    {% if stats %}
+        <p>Длина комментария: {{ stats.length }}</p>
+        <p>Гласных: {{ stats.vowels }}</p>
+        <p>Согласных: {{ stats.consonants }}</p>
     {% endif %}
 </body>
 </html>
