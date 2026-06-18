@@ -98,7 +98,8 @@ def customers(request):
 
 
 def home(request):
-    return render(request, 'app/home.html')
+    customers = Customer.objects.all()
+    return render(request, 'app/home.html', {'customers': customers})
 
 
 def add_customer(request):
