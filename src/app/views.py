@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
 from app.forms import UserForm, NameForm, ProfileForm
+from app.models import Customer
 
 VOWELS = set('аеёиоуыэюяaeiouy')
 
@@ -77,3 +78,20 @@ def profile_form(request):
         form = ProfileForm()
 
     return render(request, 'app/profile_form.html', {'form': form})
+
+
+def customers(request):
+    if Customer.objects.count() == 0:
+        Customer.objects.bulk_create([
+            Customer(firstname='Alex', lastname='Smith', age=30, profession='Engineer'),
+            Customer(firstname='Alex', lastname='Johnson', age=25, profession='Designer'),
+            Customer(firstname='Maria', lastname='Brown', age=28, profession='Doctor'),
+        ])
+
+    alex_users = Customer.objects.filter(firstname='Alex')
+    user_by_id = Customer.objects.get(id=1)
+
+    return render(request, 'app/customers.html', {
+        'alex_users': alex_users,
+        'user_by_id': user_by_id,
+    })
