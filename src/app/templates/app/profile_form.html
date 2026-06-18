@@ -4,7 +4,7 @@
 
     {% block content %}
         <h1>Форма</h1>
-        <form method="post">
+        <form method="post" action="{% url 'profile_form' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Отправить</button>
