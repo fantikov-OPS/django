@@ -95,3 +95,7 @@ def customers(request):
         'alex_users': alex_users,
         'user_by_id': user_by_id,
     })
+
+
+def home(request):
+    return render(request, 'app/home.html')
