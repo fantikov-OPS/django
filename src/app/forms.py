@@ -1,5 +1,13 @@
 from django import forms
 
+from app.models import Customer
+
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['firstname', 'lastname', 'age', 'profession']
+
 
 class NameForm(forms.Form):
     name = forms.CharField(

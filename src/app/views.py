@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 from django.http import HttpResponse
-from app.forms import UserForm, NameForm, ProfileForm
+from app.forms import UserForm, NameForm, ProfileForm, CustomerForm
 from app.models import Customer
 
 VOWELS = set('аеёиоуыэюяaeiouy')
@@ -99,3 +99,15 @@ def customers(request):
 
 def home(request):
     return render(request, 'app/home.html')
+
+
+def add_customer(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CustomerForm()
+
+    return render(request, 'app/add_customer.html', {'form': form})
