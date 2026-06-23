@@ -44,11 +44,29 @@ class Student(models.Model):
         return f'{self.firstname} {self.lastname}'
 
 
+class Diary(models.Model):
+    average_score = models.DecimalField('Средний балл', max_digits=4, decimal_places=2)
+    student = models.OneToOneField(
+        Student,
+        on_delete=models.CASCADE,
+        related_name='diary',
+        verbose_name='Студент',
+    )
+
+    class Meta:
+        verbose_name = 'Школьный дневник'
+        verbose_name_plural = 'Школьные дневники'
+
+    def __str__(self):
+        return f'Дневник {self.student}'
+
+
 class Person(models.Model):
     firstname = models.CharField(max_length=255, default=None)
     lastname = models.CharField(max_length=255, default=None)
     group = models.ForeignKey('PersonGroup', null=True, on_delete=models.SET_NULL, related_name='pesons')
-    
+    hobbies = models.ManyToManyField('Hobbies', related_name='persons')
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
@@ -83,3 +101,6 @@ class ContactPerson(models.Model):
        related_name='contactperson',
        on_delete=models.SET_NULL,
    )
+
+class Hobbies(models.Model):
+   name = models.CharField(max_length=255, default=None)
