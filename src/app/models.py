@@ -79,6 +79,20 @@ class Book(models.Model):
         return self.title
 
 
+class Product(models.Model):
+    name = models.CharField('Название', max_length=255)
+    price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField('Количество')
+    comment = models.TextField('Комментарий', blank=True)
+
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
+
+    def __str__(self):
+        return self.name
+
+
 class Person(models.Model):
     firstname = models.CharField(max_length=255, default=None)
     lastname = models.CharField(max_length=255, default=None)
