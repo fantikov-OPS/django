@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from app.forms import UserForm, NameForm, ProfileForm, CustomerForm
@@ -119,7 +120,8 @@ def api_comments(request):
         comments = Comment.objects.all()
         return JsonResponse(CommentSerializer(comments, many = True).data, safe=False)
 
+@api_view(['GET'])
 def api_products(request):
     if request.method == "GET":
         products = Product.objects.all()
-        return JsonResponse(ProductSerializerV2(products, many=True).data, safe=False)
+        return JsonResponse(ProductSerializer(products, many=True).data, safe=False)
