@@ -42,3 +42,27 @@ class Student(models.Model):
 
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
+
+
+class Person(models.Model):
+    firstname = models.CharField(max_length=255, default=None)
+    lastname = models.CharField(max_length=255, default=None)
+    group = models.ForeignKey('PersonGroup', null=True, on_delete=models.SET_NULL, related_name='pesons')
+    
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def __str__(self):
+        return f'{self.firstname} {self.lastname}'
+
+
+class PersonGroup(models.Model):
+    serial_number = models.CharField(max_length=4, default=None)
+    size = models.PositiveSmallIntegerField()
+    start_date = models.DateField(null=False)
+    finish_date = models.DateField(null=False)
+
+    class Meta:
+        verbose_name = 'Группа пользователя'
+        verbose_name_plural = 'Группы пользователя'
