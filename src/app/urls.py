@@ -1,6 +1,6 @@
 from django.urls import path
 
-from app.views import index, name_form, greet, profile_form, customers
+from app.views import index, name_form, greet, profile_form, customers, api_comments
 
 urlpatterns = [
    path(r'index1/', index, name='index'),
@@ -8,4 +8,5 @@ urlpatterns = [
    path('great/', greet, name='greet'),
    path('profile/', profile_form, name='profile_form'),
    path('customers/', customers, name='customers'),
+   path('comments/', api_comments, name='comments')
 ]

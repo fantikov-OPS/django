@@ -136,3 +136,10 @@ class ContactPerson(models.Model):
 
 class Hobbies(models.Model):
    name = models.CharField(max_length=255, default=None)
+
+
+class Comment(models.Model):
+    firstname = models.CharField(max_length=255, default=None)
+    lastname = models.CharField(max_length=255, default=None)
+    age = models.IntegerField()
+    text = models.CharField(max_length=255, default=None)

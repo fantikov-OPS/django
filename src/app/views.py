@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from app.forms import UserForm, NameForm, ProfileForm, CustomerForm
-from app.models import Customer
+from app.models import Customer, Comment
+from app.serializers import CommentSerializer
 
 VOWELS = set('аеёиоуыэюяaeiouy')
 
@@ -112,3 +113,9 @@ def add_customer(request):
         form = CustomerForm()
 
     return render(request, 'app/add_customer.html', {'form': form})
+
+def api_comments(request):
+    if request.method == "GET":
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many = True)
+        return JsonResponse(serializer.data, safe=False)
