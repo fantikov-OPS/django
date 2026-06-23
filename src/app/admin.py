@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import Customer, Group, Student, Person, PersonGroup
+from app.models import Customer, Group, Student, Person, PersonGroup, ContactInfo, ContactPerson
 
 
 @admin.register(Customer)
@@ -26,3 +26,11 @@ class PersonAdmin(admin.ModelAdmin):
 @admin.register(PersonGroup)
 class PersonGroupAdmin(admin.ModelAdmin):
     list_display = ('serial_number', 'size', 'start_date', 'finish_date')
+
+@admin.register(ContactInfo)
+class ContactInfoAdmin(admin.ModelAdmin):
+    list_display = ('phone', 'address')
+
+@admin.register(ContactPerson)
+class ContactPersonAdmin(admin.ModelAdmin):
+    list_display = ('firstname', 'lastname', 'age', 'profession', 'contact_info')
