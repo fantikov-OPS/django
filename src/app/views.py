@@ -117,5 +117,4 @@ def add_customer(request):
 def api_comments(request):
     if request.method == "GET":
         comments = Comment.objects.all()
-        serializer = CommentSerializer(comments, many = True)
-        return JsonResponse(serializer.data, safe=False)
+        return JsonResponse(CommentSerializer(comments, many = True).data, safe=False)
