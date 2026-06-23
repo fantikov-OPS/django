@@ -61,6 +61,24 @@ class Diary(models.Model):
         return f'Дневник {self.student}'
 
 
+class Book(models.Model):
+    title = models.CharField('Название', max_length=255)
+    pages = models.PositiveIntegerField('Количество страниц')
+    students = models.ManyToManyField(
+        Student,
+        related_name='books',
+        blank=True,
+        verbose_name='Студенты',
+    )
+
+    class Meta:
+        verbose_name = 'Книга'
+        verbose_name_plural = 'Книги'
+
+    def __str__(self):
+        return self.title
+
+
 class Person(models.Model):
     firstname = models.CharField(max_length=255, default=None)
     lastname = models.CharField(max_length=255, default=None)

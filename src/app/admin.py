@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import Customer, Group, Student, Diary, Person, PersonGroup, ContactInfo, ContactPerson
+from app.models import Customer, Group, Student, Diary, Book, Person, PersonGroup, ContactInfo, ContactPerson
 
 
 @admin.register(Customer)
@@ -23,6 +23,12 @@ class StudentAdmin(admin.ModelAdmin):
 class DiaryAdmin(admin.ModelAdmin):
     list_display = ('student', 'average_score')
     list_filter = ('student__group',)
+
+
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'pages')
+    filter_horizontal = ('students',)
 
 
 @admin.register(Person)
