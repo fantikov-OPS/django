@@ -5,6 +5,7 @@ import functools
 from collections.abc import Callable
 from typing import TypeVar
 from dataclasses import dataclass
+from collections.abc import Iterator
 
 a = [1,2,3,4]
 b=deepcopy(a)
@@ -178,17 +179,17 @@ class BorrowRecord:
 class Item:
 
     def __init__(self, title:str):
-        self._title = title
+        self.__title = title
     
     @property
     def title(self):
-        return self._title
+        return self.__title
     
     def __str__(self):
-        return self._title
+        return self.__title
 
     def __repr__(self):
-        return f'{self.__class__.__name__} title {self._title}'
+        return f'{self.__class__.__name__} title {self.__title}'
 
 
 class Book(Item):
@@ -199,10 +200,10 @@ class Book(Item):
         self.isbn = isbn
 
     def __str__(self):
-        return f'Book {self._title} author {self.author}'
+        return f'Book {self.__title} author {self.author}'
 
     def __repr__(self):
-        return f'Book {self._title} author {self.author} isbn {self.isbn}'
+        return f'Book {self.__title} author {self.author} isbn {self.isbn}'
 
 
 class DVD(Item):
@@ -212,10 +213,10 @@ class DVD(Item):
         self.rating = rating
 
     def __str__(self):
-        return f'DVD {self._title} {self.duration_minutes} min'
+        return f'DVD {self.__title} {self.duration_minutes} min'
 
     def __repr__(self):
-        return f'DVD {self._title} {self.duration_minutes} min rating {self.rating}'
+        return f'DVD {self.__title} {self.duration_minutes} min rating {self.rating}'
 
 class Library:
     def __init__(self):
@@ -236,6 +237,31 @@ class Library:
             raise ItemNotFoundError(title)
         self._items.remove(item)
         return item
+
+def fibonacci(n:int):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+
+class Countdown:
+    
+    def __init__(self, start:int):
+        self._current = start
+
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self._current < 1:
+            raise StopIteration
+        value = self._current
+        self._current -=1
+        return value
+
+
 
 if __name__ == '__main__':
     #print(even_squares(6))
@@ -267,7 +293,13 @@ if __name__ == '__main__':
    # print(electronics_names)
   #  print(expensive)
    # print(avg_electronics)
-    double = make_multiplier(2)
-    print(double(5))   # 10
-    triple = make_multiplier(3)
-    print(triple(4))   # 12
+   # double = make_multiplier(2)
+   # print(double(5))   # 10
+   # triple = make_multiplier(3)
+    #print(triple(4))   # 12
+    lib = Library()
+    lib.add(Book("1984", author="Orwell", isbn="978-0-452-28423-4"))
+    lib.add(DVD("Matrix", duration_minutes=136, rating=8.7))
+    lib.checkout("1984")          # возвращает Book, в библиотеке его больше нет
+    lib.checkout("Несуществующая")  # ItemNotFoundError
+
