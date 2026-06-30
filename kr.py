@@ -5,7 +5,7 @@ import functools
 from collections.abc import Callable
 from typing import TypeVar
 from dataclasses import dataclass
-from collections.abc import Iterator
+import sys
 
 a = [1,2,3,4]
 b=deepcopy(a)
@@ -261,6 +261,81 @@ class Countdown:
         self._current -=1
         return value
 
+class Vector2D:
+
+    def __init__(self, x: float , y: float):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Vector2D(self.x + other.x, self.y + other.y)
+    
+    def __sub__(self, other):
+        return Vector2D(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, other):
+        return Vector2D(self.x * other.x, self.y * other.y)
+
+    def __eq__(self, other):
+        if not isinstance(other, Vector2D):
+            return NotImplemented
+        return self.x == other.x and self.y == other.y
+
+    def __str__(self):
+        return f'({self.x}, {self.y})'
+
+    def __repr__(self):
+        return f'Vector2D ({self.x}, {self.y})' 
+
+
+def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return None
+    except TypeError as exc:
+        raise ValueError('Аргументы должны быть числами')
+
+
+def read_numbers_from_file(path: str):
+    numbers: list[float] = []
+    try:
+        with open(path, encoding='utf-8') as f:
+            for line in f:
+                stripped = line.strip()
+                if not stripped:
+                    continue
+                try:
+                    numbers.append(float(stripped))
+                except ValueError:
+                    print(f'пропущена строка {stripped}')
+    except OSError as e:
+        print('Ошибка чтения файла')
+    finally:
+        print('Ok')
+    return numbers
+                 
+import json
+                    
+def save_student_json(students, path):
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(students, f, ensure_ascii=False, indent=2)
+
+def load_students_json(path):
+    with open(path, encoding='utf-8') as f:
+        return json.load(f)
+    
+import csv
+def save_sudents_cvs(students, path):
+    with open(path, 'w', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['name', 'group', 'grade'])
+        writer.writeheader()
+        writer.writerows(students)
+
+import os
+def ensure_dir(path):
+    os.makedirs(path, exist_ok=True)
+    return os.path.abspath(path)
 
 
 if __name__ == '__main__':
