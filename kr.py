@@ -337,6 +337,41 @@ def ensure_dir(path):
     os.makedirs(path, exist_ok=True)
     return os.path.abspath(path)
 
+import re
+PHONE_PATTERN = re.compile(r"\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}")
+EMAIL_PATTERN = re.compile(f"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+$")
+
+
+def extract_phones(text):
+    return PHONE_PATTERN.findall(text)
+
+def validation_email(email):
+    return bool(EMAIL_PATTERN.match(email))
+
+
+
+
+#SELECT p.name, p.price from products p 
+#join categories c on p.category_id = c.id 
+#where c.name = 'Электроника' and p.price  > 5000
+
+#select u.email from "users" u 
+#join orders o on o.user_id u.id 
+#where o.status = 'completed'
+#roup BY u.id, u.email 
+#HAVING coount(o.id) > 3
+
+#select p.name , sum(oi.quantity ) as total_solid
+#from products p 
+#join order_items oi on oi.product_id = p.id 
+#group by p.id, p.name 
+#order by total_solid DESC
+#LIMIT 5
+
+#select p.name
+#from products p 
+#left join order_items oi on oi.product_id = p.id 
+#WHERE oi.id is null
 
 if __name__ == '__main__':
     #print(even_squares(6))
@@ -372,9 +407,11 @@ if __name__ == '__main__':
    # print(double(5))   # 10
    # triple = make_multiplier(3)
     #print(triple(4))   # 12
-    lib = Library()
-    lib.add(Book("1984", author="Orwell", isbn="978-0-452-28423-4"))
-    lib.add(DVD("Matrix", duration_minutes=136, rating=8.7))
-    lib.checkout("1984")          # возвращает Book, в библиотеке его больше нет
-    lib.checkout("Несуществующая")  # ItemNotFoundError
+    #lib = Library()
+    #lib.add(Book("1984", author="Orwell", isbn="978-0-452-28423-4"))
+    #lib.add(DVD("Matrix", duration_minutes=136, rating=8.7))
+    #lib.checkout("1984")          # возвращает Book, в библиотеке его больше нет
+    #lib.checkout("Несуществующая")  # ItemNotFoundError
+    #print(extract_phones("Звоните: +7 (999) 123-45-67"))
+    print(validation_email("user@mlocalhost"))
 
